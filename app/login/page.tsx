@@ -3,7 +3,7 @@ import LoginForm from "../components/login-form/login-form"
 
 export default function LoginPage(){
     return <Container>
-        <div className="rounded-xl grid grid-cols-2 overflow-hidden
+        <div className="rounded-xl grid md:grid-cols-2 overflow-hidden
         h-[600px]">
             <div className="flex flex-col items-center
             px-8 lg:px-24
