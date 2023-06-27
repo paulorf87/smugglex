@@ -1,20 +1,11 @@
 "use client"
 
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts"
-import { useState, useEffect } from "react"
-
 
 export default function BankAccountChart({data}:{data:any}) {
-    const [loadedData, setLoadedData] = useState<any>([]);
-
-    // workaround for hydration error
-    useEffect(() => {
-        setLoadedData(data);
-    }, [data]);
-
     return <>
     <div className="w-full flex justify-center m-4 overflow-hidden">
-        <AreaChart width={500} height={250} data={loadedData}
+        <AreaChart width={500} height={250} data={data}
         margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
         <defs>
             <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">

@@ -5,6 +5,8 @@ import Stack from './components/stack/stack'
 import PayeesCard from './components/payees-card/payees-card'
 import ReminderCard from './components/reminder-card/reminder-card'
 import Watchlist from './components/watchlist/watchlist'
+import DashCard from './components/dash-card/dash-card'
+import LoadingSpinner from './components/loading-spinner/loading-spinner'
 
 export default function Home() {
   return (
