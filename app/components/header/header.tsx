@@ -1,7 +1,8 @@
 import Image from "next/image"
 import Avatar from "../avatar/avatar"
 
-export default function Header(){
+export default async function Header(){
+
     return (
         <header className="w-full bg-dark-100">
             <nav className="container mx-auto py-4 px-2 flex items-center">

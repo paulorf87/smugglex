@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 import dynamic from "next/dynamic";
+import {FaMoneyBill} from 'react-icons/fa'
 
 const DynamicBankAccountChart = dynamic(
     () => import('../bank-account-chart/bank-account-chart'),
@@ -40,13 +41,15 @@ export default async function BankAccountCard(){
     return <DashCard height="full">
         <div id="bank-account-header" className="flex items-start justify-between border-b">
             <div className="">
-                <HeadingSM className="text-gray-500 mb-[-20px]">Kingpin Inc. Account</HeadingSM>
+                <HeadingSM className="text-gray-500 mb-[-20px] flex items-center">
+                    <FaMoneyBill className="inline-block mr-2" />
+                    Kingpin Inc. Account</HeadingSM>
                 <Paragraph className="text-gray-500">Account Number: <span className="text-primary">123456789</span></Paragraph>
             </div>
             <Image className="rounded" src="images/smugglebank.svg" width={150} height={50} alt="smugglebank Logo" />
         </div>
         <div id="bank-account-body" className="flex items-center h-full justify-between
-        translate-y-[-1em]">
+        translate-y-[-1em] min-h-[250px]">
             <DynamicBankAccountChart data={data}/>
         </div>
     </DashCard>

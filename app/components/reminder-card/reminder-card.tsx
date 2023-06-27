@@ -1,10 +1,12 @@
 import DashCard from "../dash-card/dash-card";
 import { HeadingSM, Paragraph } from "../typography/typography";
+import {AiFillBell} from 'react-icons/ai'
 
 export default function ReminderCard(){
     return <DashCard>
         <div className="flex items-center justify-between border-b">
-            <HeadingSM className="text-gray-500 py-2">
+            <HeadingSM className="text-gray-500 py-2 items-center flex gap-1">
+                <AiFillBell className="inline-block mr-2" />
                 Reminders
             </HeadingSM>
         </div>

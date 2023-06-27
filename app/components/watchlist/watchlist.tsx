@@ -1,6 +1,7 @@
 import { HeadingSM } from "../typography/typography"
 import DashCard from "../dash-card/dash-card"
 import WatchlistRow from "./watchlist-row"
+import {AiOutlineMonitor} from 'react-icons/ai'
 
 async function getWatchlistData(){
     try{
@@ -19,7 +20,10 @@ export default async function Watchlist(){
 
     return <DashCard>
         <div className="flex items-center justify-between pt-2 border-b">
-            <HeadingSM className="text-gray-500 py-2">Watchlist</HeadingSM>
+            <HeadingSM className="text-gray-500 py-2 flex items-center">
+                <AiOutlineMonitor className="inline-block mr-2" />
+                Watchlist
+            </HeadingSM>
         </div>
         <table className="table-auto">
             <thead>

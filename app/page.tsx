@@ -5,15 +5,13 @@ import Stack from './components/stack/stack'
 import PayeesCard from './components/payees-card/payees-card'
 import ReminderCard from './components/reminder-card/reminder-card'
 import Watchlist from './components/watchlist/watchlist'
-import DashCard from './components/dash-card/dash-card'
-import LoadingSpinner from './components/loading-spinner/loading-spinner'
 
-export default function Home() {
+export default async function Home() {
   return (
         <>
           <Subheader />
           <Container className="bg-gray-100">
-            <div className='grid  md:grid-cols-2 gap-2'>
+            <div className='grid  lg:grid-cols-2 gap-2'>
               <BankAccountCard />
               <Stack>
                 <PayeesCard />
