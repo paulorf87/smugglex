@@ -18,7 +18,7 @@ export default async function Watchlist(){
     const data = await getWatchlistData(); 
 
     return <DashCard>
-        <div className="flex items-center justify-between border-b">
+        <div className="flex items-center justify-between pt-2 border-b">
             <HeadingSM className="text-gray-500 py-2">Watchlist</HeadingSM>
         </div>
         <table className="table-auto">
@@ -34,6 +34,6 @@ export default async function Watchlist(){
                 currentMonth={item.currentMonth} currentYear={item.currentYear} />)}
             </tbody>
         </table>
-        
+        <div className="flex items-center justify-between border-t pb-8"></div>
     </DashCard>
 }
