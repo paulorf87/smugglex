@@ -4,9 +4,10 @@ import { HeadingMD, Paragraph } from "../typography/typography"
 import Button from "../button/button"
 import Link from "next/link"
 import {z} from "zod"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, set, useForm } from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 
 const formSchema = z.object({
@@ -23,8 +24,9 @@ type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function LoginForm(){
     const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const {register, handleSubmit, formState: {errors}} = useForm<FormSchemaType>({
+    const {register, handleSubmit, formState: {errors},setValue} = useForm<FormSchemaType>({
         resolver: zodResolver(formSchema)
     })
 
@@ -42,16 +44,19 @@ export default function LoginForm(){
                     revalidate:0
                 }
             });
-
             if(response.ok){
                 router.push("/");
-            }else{
-                throw new Error("Something went wrong");
-                router.refresh();
+            } else {
+                setValue("password","");
+                setValue("username","");
+                setErrorMessage('Username or password is incorrect');
             }
         } catch (error) {
-            console.log(error);
-            router.refresh();
+            
+            setValue("password","");
+            setValue("username","");
+            setErrorMessage('Something went wrong');
+            console.log('[login-form error]',error);
         }  
     }
 
@@ -59,6 +64,7 @@ export default function LoginForm(){
     w-full
     text-center flex flex-col gap-2">
         <HeadingMD className="text-gray-500">Login</HeadingMD>
+        {errorMessage && <div className="text-red-500 text-sm font-bold animate-pulse">{errorMessage}</div>}
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-1 px-4">
                 <label className="text-gray-500 text-left" htmlFor="username">username</label>
