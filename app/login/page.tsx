@@ -1,5 +1,6 @@
 import Container from "../components/container/container"
 import LoginForm from "../components/login-form/login-form"
+import AssistantMessage from "../components/assistant/assistant-message"
 
 export default function LoginPage(){
     return <Container>
@@ -10,6 +11,8 @@ export default function LoginPage(){
             justify-center
             bg-light-200">
                 <LoginForm/>
+                <AssistantMessage>click in the CB button to skip the credentials cracking
+                </AssistantMessage>
             </div>
             <div className="bg-primary border-l shadow-lg 
             flex flex-col items-center justify-center

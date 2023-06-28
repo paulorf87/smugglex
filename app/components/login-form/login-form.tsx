@@ -28,9 +28,31 @@ export default function LoginForm(){
         resolver: zodResolver(formSchema)
     })
 
-    const onSubmit: SubmitHandler<FormSchemaType> = (data) => {
-        console.log(data);
-        router.push("/");
+    const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
+        const {username, password} = data;
+
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/login",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({username, password}), 
+                next:{
+                    revalidate:0
+                }
+            });
+
+            if(response.ok){
+                router.push("/");
+            }else{
+                throw new Error("Something went wrong");
+                router.refresh();
+            }
+        } catch (error) {
+            console.log(error);
+            router.refresh();
+        }  
     }
 
     return <div className="
