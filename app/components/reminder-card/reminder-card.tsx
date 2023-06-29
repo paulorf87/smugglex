@@ -18,9 +18,9 @@ export default function ReminderCard(){
             </Paragraph>
         </div>
         <div className="flex items-center justify-between py-2">
-            <Paragraph className="text-primary font-bold">
+            <button data-testid="reminder-card-button" className="text-primary font-bold">
                 Setup now 
-            </Paragraph>
+            </button>
         </div>
     </DashCard>
 }
