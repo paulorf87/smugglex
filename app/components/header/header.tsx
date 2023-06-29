@@ -5,7 +5,7 @@ import {redirect} from "next/navigation"
 
 async function logout(){
     "use server"
-    cookies().set("token", "");
+    cookies().set("next-token", "");
     redirect("/login");
 }
 

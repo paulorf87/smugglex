@@ -12,23 +12,22 @@ export async function middleware(request: NextRequest) {
                 },
                 body:JSON.stringify({jwtToken:token}), 
                 next:{
-                    revalidate:0
+                    revalidate:60
                 }
             }); 
-
             if(response.ok){
                 return NextResponse.next();
             } else {
-                console.log("Invalid token" );
+                console.log("[middleware: invalid token]" );
                 return NextResponse.redirect(new URL("/login", request.url));
             }
-            
+    
         }catch(err:any){
-            console.log(err.message);
+            console.log('[middleware: token validation error]', err.message);
             return NextResponse.redirect(new URL("/login", request.url));
         }
     }
-    
+    console.log('[middleware: no token found]');
     return NextResponse.redirect(new URL("/login", request.url));
 }
 

@@ -6,7 +6,7 @@ import Link from "next/link"
 import {z} from "zod"
 import { SubmitHandler, set, useForm } from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useState } from "react"
 
 
@@ -23,8 +23,8 @@ type FormSchemaType = z.infer<typeof formSchema>;
 
 
 export default function LoginForm(){
-    const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const router = useRouter();
 
     const {register, handleSubmit, formState: {errors},setValue} = useForm<FormSchemaType>({
         resolver: zodResolver(formSchema)
@@ -44,18 +44,22 @@ export default function LoginForm(){
                     revalidate:0
                 }
             });
+            console.log('[login-form]','request sent');
+            const data = await response.json();
+
             if(response.ok){
+                console.log('[login-form OK]',data);
                 router.push("/");
             } else {
+                console.log('[login-form NOK]',data)
                 setValue("password","");
                 setValue("username","");
-                setErrorMessage('Username or password is incorrect');
+                setErrorMessage('Invalid credentials');
             }
         } catch (error) {
-            
             setValue("password","");
             setValue("username","");
-            setErrorMessage('Something went wrong');
+            setErrorMessage('Invalid credentials');
             console.log('[login-form error]',error);
         }  
     }
