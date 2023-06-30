@@ -1,43 +1,30 @@
 import { NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 
-const mockData = [
-    {
-        description: 'Income from weapons trade',
-        currentMonth: 10.5,
-        currentYear: 120.5,
-    },
-    {
-        description: 'Income from bio-weapons',
-        currentMonth: 2.5,
-        currentYear: 12.5,
-    },
-    {
-        description: 'Income from Cyberscrimes',
-        currentMonth: 5.5,
-        currentYear: 15.5,
-    },
-    {
-        description: 'Investments ',
-        currentMonth: -8.75,
-        currentYear: -16.25,
-    },{
-        description: 'Money laundry fees',
-        currentMonth: 2.87,
-        currentYear: 6.25,
-    }, 
-    {
-        description: 'Expenses with assassinations',
-        currentMonth: -10.5,
-        currentYear: -12.5,
-    },
-    {
-        description: 'Expenses with bribes',
-        currentMonth: -5.5,
-        currentYear: -15.5,
-    }
+import type { WatchlistTransaction } from "@/types/watchlist";
+
+const prisma = new PrismaClient();
+
+const mockData:any = [
+    
 ]
 
 export async function GET(req:Request){
 
     return NextResponse.json({ok:true, data: mockData});
+}
+
+export async function POST(request:Request){
+    const body = await request.json();
+    const { account, value, userId } = body;
+    const transaction:WatchlistTransaction = {
+        account: account,
+        value: value,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: userId
+    }
+
+    prisma.$disconnect();
+    return transaction;
 }

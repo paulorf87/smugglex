@@ -25,17 +25,16 @@ export default async function Watchlist(){
                 Watchlist
             </HeadingSM>
         </div>
-        <table className="table-auto">
+        <table className="table-auto w-full">
             <thead>
                 <tr>
                     <th className="text-gray-500 px-4 text-left">Account</th>
-                    <th className="text-gray-500 px-4">Current Month ($)</th>
-                    <th className="text-gray-500 px-4">Current Year ($)</th>
+                    <th className="text-gray-500 px-4">This Month($)</th>
                 </tr>
             </thead>
             <tbody>
                 {data && data.map((item:any, index:number) => <WatchlistRow key={index} description={item.description}
-                currentMonth={item.currentMonth} currentYear={item.currentYear} />)}
+                currentMonth={item.currentMonth} />)}
             </tbody>
         </table>
         <div className="flex items-center justify-between border-t pb-8"></div>

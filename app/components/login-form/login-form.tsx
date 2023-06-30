@@ -48,8 +48,7 @@ export default function LoginForm(){
             const data = await response.json();
 
             if(response.ok){
-                console.log('[login-form OK]',data);
-                router.push("/");
+                return router.push("/");
             } else {
                 console.log('[login-form NOK]',data)
                 setValue("password","");

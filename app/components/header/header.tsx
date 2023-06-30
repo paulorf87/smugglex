@@ -2,11 +2,22 @@ import Image from "next/image"
 import Avatar from "../avatar/avatar"
 import { cookies } from "next/headers"
 import {redirect} from "next/navigation"
+import { PrismaClient } from "@prisma/client"
 
 async function logout(){
     "use server"
     cookies().set("next-token", "");
     redirect("/login");
+}
+
+async function getUserByUsername(username:string){
+    const prisma = new PrismaClient();
+    const user = await prisma.user.findUnique({
+        where: {
+            username: username
+        }
+    });
+    return user;
 }
 
 export default async function Header(){
