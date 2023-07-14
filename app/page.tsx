@@ -6,6 +6,8 @@ import PayeesCard from './components/payees-card/payees-card'
 import ReminderCard from './components/reminder-card/reminder-card'
 import Watchlist from './components/watchlist/watchlist'
 
+export const runtime = "nodejs";
+
 export default async function Home() {
   return (
         <>

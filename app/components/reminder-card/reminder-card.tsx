@@ -1,26 +1,27 @@
+"use client"
+
+import { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+
+
 import DashCard from "../dash-card/dash-card";
-import { HeadingSM, Paragraph } from "../typography/typography";
+import { HeadingSM } from "../typography/typography";
 import {AiFillBell} from 'react-icons/ai'
+import ReminderItem from "./reminder-item";
 
 export default function ReminderCard(){
+    const dispatch = useDispatch();
+    const reminders = useSelector((state: RootState) => state.reminders);
+
     return <DashCard>
-        <div className="flex items-center justify-between border-b">
-            <HeadingSM className="text-gray-500 py-2 items-center flex gap-1">
-                <AiFillBell className="inline-block mr-2" />
+        <div className="flex flex-col h-64 overflow-auto">
+        <HeadingSM className="text-gray-500 py-2 flex items-center border-b">
+                <AiFillBell className="mr-2"/>
                 Reminders
             </HeadingSM>
-        </div>
-        <div className="flex items-center justify-between py-2">
-            <Paragraph className="text-gray-500">
-                Set up the emmergency data destruction protocol and feel safe 
-                in case of authrorities raiding your financil information. It's quick and easy, just 
-                click in the link below to start the process.
-            </Paragraph>
-        </div>
-        <div className="flex items-center justify-between py-2">
-            <button data-testid="reminder-card-button" className="text-primary font-bold">
-                Setup now 
-            </button>
+            <ul className="py-4">
+                {reminders.map((reminder) => <ReminderItem key={reminder.id} reminder={reminder}/>)}
+            </ul>
         </div>
     </DashCard>
 }

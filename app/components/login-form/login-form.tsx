@@ -2,12 +2,12 @@
 
 import { HeadingMD, Paragraph } from "../typography/typography"
 import Button from "../button/button"
-import Link from "next/link"
 import {z} from "zod"
 import { SubmitHandler, set, useForm } from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
+import LoadingSpinner from "../loading-spinner/loading-spinner"
 
 
 const formSchema = z.object({
@@ -24,6 +24,7 @@ type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function LoginForm(){
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
     const {register, handleSubmit, formState: {errors},setValue} = useForm<FormSchemaType>({
@@ -32,6 +33,7 @@ export default function LoginForm(){
 
     const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
         const {username, password} = data;
+        setLoading(true);
 
         try {
             const response = await fetch("http://localhost:3000/api/auth/login",{
@@ -51,16 +53,18 @@ export default function LoginForm(){
                 router.refresh();
                 return router.push("/");
             } else {
-                console.log('[login-form NOK]',data)
                 setValue("password","");
                 setValue("username","");
                 setErrorMessage('Invalid credentials');
+                console.log('[login-form NOK]',data)
+                setLoading(false);
             }
         } catch (error) {
             setValue("password","");
             setValue("username","");
             setErrorMessage('Invalid credentials');
             console.log('[login-form error]',error);
+            setLoading(false);
         }  
     }
 
@@ -86,7 +90,9 @@ export default function LoginForm(){
                 <div className="text-red-500 text-left text-sm">{errors.password?.message}</div>
             </div>
             <div className="px-4">
-                <Button type="submit">Login</Button>
+                {loading ? <LoadingSpinner/> 
+                    :<Button type="submit">Login</Button>
+                }
             </div>
         </form>
         <Paragraph className="text-gray-500">Don't have an account? 
