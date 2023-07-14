@@ -13,13 +13,13 @@ export default function LoginPage(){
             justify-center
             bg-light-200">
                 <LoginForm/>
-                <AssistantMessage>click in the CB button to skip the credentials cracking
+                <AssistantMessage>use "wilson.fisk" and "kingpin123" for login or crack the other user's password
                 </AssistantMessage>
             </div>
             <div className="bg-primary border-l shadow-lg 
             flex flex-col items-center justify-center
             md:flex gap-4">
-                <FaPiggyBank className="text-9xl text-white"/>
+                <FaPiggyBank className="text-9xl text-white animate-bounce"/>
                 <Image className="border rounded-lg" src="/images/smugglebank.svg" alt="smugglEX Login" width={300} height={300} />
             </div>
         </div>

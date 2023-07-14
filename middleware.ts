@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { cookies } from "next/headers";
 
 export async function middleware(request: NextRequest) {
     let token = request.cookies.get('next-token')?.value;
@@ -28,7 +27,7 @@ export async function middleware(request: NextRequest) {
             }
     
         }catch(err:any){
-            console.log('[middleware: token validation error]', err.message);
+            console.log('[middleware: token validation error]', "malformed or non-existent token");
             return NextResponse.redirect(new URL("/login", request.url));
         }
     }

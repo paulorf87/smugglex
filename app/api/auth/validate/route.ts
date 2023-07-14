@@ -11,6 +11,9 @@ export async function POST(request: NextRequest) {
     const { token } = body;
 
     const decoded = decodeToken(token) as JwtPayload;
+    if(!decoded){
+        throw new UnauthorizedError();
+    }
     const { username } = decoded;
 
     const user = await prisma.user.findFirst({

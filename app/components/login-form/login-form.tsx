@@ -77,16 +77,16 @@ export default function LoginForm(){
             <div className="flex flex-col gap-1 px-4">
                 <label className="text-gray-500 text-left" htmlFor="username">username</label>
                 <input type="text" id="username" 
-                className="text-gray-500 p-2 rounded-md border outline-none"
-                {...register("username")}/>
+                className="text-gray-500 p-2 rounded-md border outline-none focus:border-orange-300"
+                {...register("username")} placeholder="wilson.fisk"/>
                 <div className="text-red-500 text-left text-sm">{errors.username?.message}</div>
             </div>
 
             <div className="flex flex-col gap-1 px-4">
                 <label className="text-gray-500 text-left" htmlFor="password">password</label>
                 <input type="password" id="password" 
-                className="text-gray-500 p-2 rounded-md border outline-none"
-                {...register("password")}/>
+                className="text-gray-500 p-2 rounded-md border outline-none focus:border-orange-300"
+                {...register("password")} placeholder="kingpin123"/>
                 <div className="text-red-500 text-left text-sm">{errors.password?.message}</div>
             </div>
             <div className="px-4">

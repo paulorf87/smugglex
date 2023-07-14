@@ -4,6 +4,7 @@ import { decodeToken } from "@/app/lib/users"
 import { cookies } from "next/headers";
 import { HeaderUser } from "./header-user";
 import { Suspense } from "react";
+import Link from "next/link";
 
 async function getCurrentUser(){
     const token = cookies().get('next-token')?.value!;
@@ -22,7 +23,7 @@ async function getCurrentUser(){
         return user;
 
     }catch(error){
-        console.log('[auth error]',error);
+        console.log('[auth error]',"Invalid token");
 
         prisma.$disconnect();
         return null;
@@ -39,7 +40,9 @@ export default async function Header(){
             <nav className="container mx-auto py-4 px-2 flex items-center">
                 <Image src="/images/smugglex.svg" alt="smugglEX Logo" width={150} height={50} />
                 <ul className=" items-center ml-auto hidden sm:flex ">
-                    <li className="ml-6 hover:text-primary hover:cursor-pointer">Dashboard</li>
+                    <li className="ml-6 hover:text-primary hover:cursor-pointer">
+                        <Link href="/">Dashboard</Link>
+                    </li>
                     <li className="ml-6 text-light-100 cursor-not-allowed">Business</li>
                     <li className="ml-6 text-light-100 cursor-not-allowed">Accounting</li>
                     <li className="ml-6 text-light-100 cursor-not-allowed">Payroll</li>
