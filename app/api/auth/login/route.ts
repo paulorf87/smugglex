@@ -1,20 +1,28 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import { createUserToken } from "@/app/lib/users"
-// import { serialize } from "cookie"
 import { UnauthorizedError } from "@/app/lib/errors"
+import { PrismaClient } from "@prisma/client"
 
 
-const mockCredentials = {
-    username: "admin",
-    password: "administer"
-}
 
 export async function POST(req: Request) {
     const body = await req.json();
     const { username, password } = body;
+    
+    const prisma = new PrismaClient();
 
-    if (username !== mockCredentials.username || password !== mockCredentials.password) {
+    const user = await prisma.user.findFirst({
+        where: {
+            username: username,
+        }
+    });
+
+    if (!user) {
+        throw new UnauthorizedError();
+    }
+
+    if(user.password !== password) {
         throw new UnauthorizedError();
     }
 
@@ -26,7 +34,7 @@ export async function POST(req: Request) {
         name: "next-token",
         value: token,
         path: "/",
-        httpOnly: true,
+        sameSite: "lax",
     });
     console.log('[api login]','success');
     return NextResponse.json({ ok: true, message:"success" });   

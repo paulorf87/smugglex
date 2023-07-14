@@ -48,6 +48,7 @@ export default function LoginForm(){
             const data = await response.json();
 
             if(response.ok){
+                router.refresh();
                 return router.push("/");
             } else {
                 console.log('[login-form NOK]',data)
@@ -65,10 +66,10 @@ export default function LoginForm(){
 
     return <div className="
     w-full
-    text-center flex flex-col gap-2">
+    text-center flex flex-col gap-4">
         <HeadingMD className="text-gray-500">Login</HeadingMD>
         {errorMessage && <div className="text-red-500 text-sm font-bold animate-pulse">{errorMessage}</div>}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-1 px-4">
                 <label className="text-gray-500 text-left" htmlFor="username">username</label>
                 <input type="text" id="username" 
@@ -94,7 +95,7 @@ export default function LoginForm(){
             </span>
         </Paragraph>
         <div className="flex flex-row justify-center gap-2">
-            <Link href={"/"}
+            {/* <Link href={"/"}
             className="bg-white rounded-full 
             px-4 py-2 border shadow-lg 
             text-gray-500
@@ -102,7 +103,7 @@ export default function LoginForm(){
                 <div className="p-2 rounded-full border border-primary text-primary
                 text-center flex items-center justify-center font-bold">CB</div>
                 Login with <span className="text-primary ml-1">Crime Boss</span>
-            </Link>
+            </Link> */}
         </div>
     </div>
 }

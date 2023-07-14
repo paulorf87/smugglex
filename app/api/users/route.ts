@@ -7,13 +7,14 @@ const prisma = new PrismaClient();
 export async function GET(req:Request){
     const users = await prisma.user.findMany();
 
+    prisma.$disconnect();
     return NextResponse.json({ok:true, users});       
 }
 
 export async function POST(request:Request){
     const body = await request.json();
     const { name, username, password, avatarUrl }:User = body;
-    if(!name || !username || !password || !avatarUrl) 
+    if(!name || !username || !password ) 
         return NextResponse.json({ok:false, error: "Missing required fields"} as any);
 
     const user = await prisma.user.create({

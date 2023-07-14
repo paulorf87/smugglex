@@ -1,27 +1,39 @@
 import Image from "next/image"
-import Avatar from "../avatar/avatar"
-import { cookies } from "next/headers"
-import {redirect} from "next/navigation"
 import { PrismaClient } from "@prisma/client"
+import { decodeToken } from "@/app/lib/users"
+import { cookies } from "next/headers";
+import { HeaderUser } from "./header-user";
+import { Suspense } from "react";
 
-async function logout(){
-    "use server"
-    cookies().set("next-token", "");
-    redirect("/login");
-}
-
-async function getUserByUsername(username:string){
+async function getCurrentUser(){
+    const token = cookies().get('next-token')?.value!;
     const prisma = new PrismaClient();
-    const user = await prisma.user.findUnique({
-        where: {
-            username: username
-        }
-    });
-    return user;
+    
+    try{
+        
+        const {username}:any = decodeToken(token);
+        const user = await prisma.user.findUnique({
+            where: {
+                username
+            }
+        });
+        
+        prisma.$disconnect();
+        return user;
+
+    }catch(error){
+        console.log('[auth error]',error);
+
+        prisma.$disconnect();
+        return null;
+    }
 }
+
 
 export default async function Header(){
 
+    const user = await getCurrentUser();
+    
     return (
         <header className="w-full bg-dark-100">
             <nav className="container mx-auto py-4 px-2 flex items-center">
@@ -32,13 +44,13 @@ export default async function Header(){
                     <li className="ml-6 text-light-100 cursor-not-allowed">Accounting</li>
                     <li className="ml-6 text-light-100 cursor-not-allowed">Payroll</li>
                 </ul>
-                <ul className="flex items-center ml-auto">
-                    <Avatar source="/images/kingpin.svg" name="Wilson Fisk" />
-                    {/* testing server actions (NEXT.js 13) */}
-                    <form action={logout}>
-                        <button className="ml-6 text-light-100 hover:text-primary">Logout</button>
-                    </form>
-                </ul>
+                <div className="flex items-center ml-auto">
+                    {user ?
+                    <Suspense fallback={<p>loading...</p>}>
+                        <HeaderUser user={user}/>
+                    </Suspense>
+                    : 'Not logged in'}
+                </div>
             </nav>
         </header>
     )
